@@ -1,20 +1,20 @@
-// 完善版
-Function.prototype.apply2 = function(content = window) {
-    content.fn = this
+/**
+ * apply
+ */
+Function.prototype.apply2 = function(context = window, args) {
+    context.fn = this
     let result;
     // 判断是否有第二个参数
-    if(arguments[1]) {
-        result = content.fn(...arguments[1])
+    if(Array.isArray(args)) {
+        result = context.fn(...args)
     } else {
-        result = content.fn()
+        result = context.fn()
     }
-    delete content.fn
+    delete context.fn
     return result
 }
 
-let foo = {
-    value: 1
-}
+let foo = { value: 1 }
 
 function bar(name, age) {
     console.log(name)
@@ -22,4 +22,4 @@ function bar(name, age) {
     console.log(this.value)
 }
 
-bar.apply2(foo, ['black', '18']) // black 18 1
+bar.apply2(foo, ['xsq', '18']) // xsq 18 1
