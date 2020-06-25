@@ -1,9 +1,12 @@
-
-var ul = document.getElementById("ul");
-var fragment = document.createDocumentFragment();
-for (var i = 0; i < 20; i++) {
-    var li = document.createElement("li");
-    li.innerHTML = "index: " + i;
-    fragment.appendChild(li);
+function Parent() {
+    this.name = 'ivan'
+    this.play = [1, 2, 3]
 }
-ul.appendChild(fragment);
+
+function Child() {
+    Parent.call(this)
+    this.type = 'xsq'
+}
+Child.prototype = new Parent()
+
+
