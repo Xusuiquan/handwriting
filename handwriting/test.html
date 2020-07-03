@@ -6,17 +6,16 @@
     <title>Document</title>
 </head>
 <style>
-    p {
-        margin: 0;
-    }
-    div {
-        margin-top: 13px;
-        margin-bottom: 87px;
-    }
+    .box { height: 200px; }
+    .box > div { height: 100%; }
+    .box-left { width: 200px; float: left; background-color: lightblue; }
+    .box-right { width: calc(100% - 200px); background-color: lightcoral; }
 </style>
 <body>
-    <p>a</p>
-    <div></div>
-    <p>b</p>
+    <div class="box">
+        <div class="box-left"></div>
+        <div class="box-right"></div>
+    </div>
 </body>
+<script src="./algorithm/stack/valid().js"></script>
 </html>

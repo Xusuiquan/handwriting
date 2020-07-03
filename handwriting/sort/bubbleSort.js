@@ -3,7 +3,7 @@
  */
 function bubbleSort(array) {
     for (let j = 0; j < array.length - 1; j++) {
-        for (let i = 0; i < array.length - 1; i++) {
+        for (let i = 0; i < array.length - 1 - j; i++) {
             // 比较相邻数
             if (array[i] > array[i + 1]) {
                 let temp = array[i] // 利用中间值
