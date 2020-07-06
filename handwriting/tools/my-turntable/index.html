@@ -4,8 +4,33 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>lucky draw</title>
+
+    <script type="text/javascript" src="js/jquery-1.10.2.js"></script>
+    <script type="text/javascript" src="js/jquery.rotate.js"></script>
+    <script type="text/javascript" src="js/turnplate.js"></script>
+
 </head>
+<style>
+    * { margin: 0; padding: 0; }
+    .turnplate { 
+        position: relative; 
+        width: 100vw; 
+        background: white; 
+        overflow: hidden; 
+    }
+    .pointer { 
+        position: absolute;
+        left: 50%;
+        top: 44%;
+        transform: translate(-50%, -50%); 
+    }
+</style>
 <body>
-    
+    <div class="container">
+        <div class="turnplate">
+            <canvas class="item" id="wheelcanvas" width="375px" height="375px"></canvas>
+            <img class="pointer" src="img/pointer.png"></img>
+        </div>
+    </div>
 </body>
 </html>

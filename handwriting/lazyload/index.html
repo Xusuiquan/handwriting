@@ -37,6 +37,8 @@
     
     window.addEventListener('scroll', throttle(lazyload, 200))
     
+    // clientHeght > offsetTop  可视区域大于偏移量
+
     function lazyload() {
         var seeHeight = window.innerHeight // 可见区域
         var scrollTop = document.documentElement.scrollTop 
@@ -53,3 +55,4 @@
     }
 </script>
 </html>
+

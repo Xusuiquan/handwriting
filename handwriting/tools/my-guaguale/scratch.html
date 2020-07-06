@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>刮刮乐</title>
+</head>
+<body>
+    <div id="container">
+        <div class="canvasBox">
+            <span id="price">恭喜发财</span>
+            <!-- 蒙面画布 -->
+            <canvas id="canvas"></canvas>
+        </div>
+    </div>
+</body>
+<style>
+    #container {
+        position: relative;
+    }
+    .canvasBox {
+        width: 80%;
+        height: 150px;
+        line-height: 150px;
+        border-radius: 40px;
+        background-color: #fff;
+        margin: 0 auto;
+        text-align: center;
+        position: relative;
+        font-size: 35px;
+    }
+    #canvas {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        border-radius: 40px;
+        top: 0;
+        left: 0;
+    }
+    .disappear {
+        -webkit-animation: disa 2s 1;
+        animation: disa 2s 1;
+        -webkit-animation-fill-mode: forwards;
+        -moz-animation-fill-mode: forwards;
+        -o-animation-fill-mode: forwards;
+        animation-fill-mode: forwards;
+    }
+    @keyframes disa {
+        0%{opacity: 1;}
+        100%{opacity: 0;}
+    }
+</style>
+<script>
+    let canvas = document.getElementById("canvas")
+    let ctx = canvas.getContext('2d')
+    
+    // 画布偏移量
+    let arr = getOffset(canvas)
+    let oLeft = arr[0]
+    let oTop = arr[1]
+    
+    // 初始化画布
+    ctx.beginPath()
+    ctx.fillStyle = '#ccc'
+    ctx.fillRect(0, 0, canvas.width, canvas.height)
+    ctx.fillStyle = '#000'
+    ctx.font = '20px 微软雅黑'
+    ctx.textAlign = 'center'
+    ctx.textBaseline = 'middle'
+    ctx.fillText('刮开试试手气', canvas.width/2, canvas.height/2)
+    ctx.closePath()
+
+    // 开始触摸监听
+    document.addEventListener('touchstart', function() {
+        
+        ctx.beginPath() // 初始化画笔
+        ctx.lineWidth = 30 // 画笔粗细
+        ctx.globalCompositeOperation = 'destination-out' // 设置组合效果
+        ctx.moveTo(event.touches[0].pageX-oLeft, event.touches[0].pageY-oTop) // 移动画笔原点
+    }, false)
+
+    // 触摸移动监听
+    document.addEventListener('touchmove', function() {
+        
+        // 根据手指移动划线，变透明
+        ctx.lineTo(event.touches[0].pageX-oLeft, event.touches[0].pageY-oTop)
+        ctx.stroke() // 填充
+    })
+
+    // 结束触摸监听
+    document.addEventListener('touchend', function() {
+        // 获取imageData对象
+        let imageData = ctx.getImageData(0, 0, canvas.width, canvas.height)
+        let allPx = imageData.width * imageData.height
+        let iNum = 0; // 记录刮开的像素点个数
+        
+        for(let i = 0; i < allPx; i++) {
+            if(imageData.data[i*4 + 3] === 0) {
+                iNum++;
+            }
+
+            if(iNum >= allPx*3/4) {
+                // 缓慢清除的css3动画效果
+                canvas.setAttribute('class', 'disappear')
+            }
+        }
+    })
+
+    // 获取该元素到可视窗口的距离
+    function getOffset(obj){
+        var valLeft = 0,valTop = 0;
+        function get(obj){
+            valLeft += obj.offsetLeft;
+            valTop += obj.offsetTop;
+            /* 不到最外层就一直调用，直到offsetParent为body*/
+            if (obj.offsetParent.tagName!='BODY') {
+                get(obj.offsetParent);
+            }
+            return [valLeft,valTop];
+        }
+        return get(obj);
+    }
+
+</script>
+</html>
