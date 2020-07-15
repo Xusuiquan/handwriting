@@ -1,3 +1,6 @@
+/**
+ * 括号有效性问题
+ */
 const isValid = function(s) {
     let map = {
         '{': '}',

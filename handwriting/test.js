@@ -1,16 +1,12 @@
-var result = [], a = 3, total = 0
-
-function f(a) {
-    var i = 0
-    for(; i < 3; i = i + 1) {
-        result[i] = function() {
-            total += a * i
-            return total
-        }
-    }
+function side(arr) {
+    arr[0] = arr[1] + arr[2]
 }
 
-f(1)
-console.log(result[0]())
-console.log(result[1]())
-console.log(result[2]())
+function a(a, b, c = 3) {
+    c = 10
+    side(arguments)
+    console.log(c)
+    console.log(a + b + c)
+}
+
+a(1, 1, 1)
