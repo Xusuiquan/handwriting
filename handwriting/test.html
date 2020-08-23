@@ -6,16 +6,89 @@
     <title>Document</title>
 </head>
 <style>
-    .box { height: 200px; }
-    .box > div { height: 100%; }
-    .box-left { width: 200px; float: left; background-color: lightblue; }
-    .box-right { width: calc(100% - 200px); background-color: lightcoral; }
+    /* .bg{ width: 100vw; height: 100vh; background: black; position: relative;}
+    .modal { width: 200px; height: 200px; background: white;  
+        position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+    } */
 </style>
 <body>
-    <div class="box">
-        <div class="box-left"></div>
-        <div class="box-right"></div>
-    </div>
+    <div style="height: 100px;"></div>
+    <popup-info img="img/alt.png" text="提示信息">
 </body>
-<script src="test.js"></script>
+<script>
+    class PopUpInfo extends HTMLElement {
+        constructor() {
+            super();
+ 
+            // 创建文本框
+            var info = document.createElement('span');
+            info.setAttribute('class', 'info');
+            // 获取自定义标签的text属性
+            var text = this.getAttribute('text');
+            info.textContent = text;
+ 
+            // 创建图片元素
+            var imgUrl;
+            if (this.hasAttribute('img')) {
+                imgUrl = this.getAttribute('img');
+            } else {
+                imgUrl = 'img/default.png';
+            }
+            var img = document.createElement('img');
+            img.src = imgUrl;
+ 
+            var icon = document.createElement('span');
+            icon.setAttribute('class', 'icon');
+            icon.appendChild(img);
+ 
+            // 创建css样式
+            var style = document.createElement('style');
+            style.textContent = 
+            `
+                .wrapper {
+                    position: relative;
+                }
+                .info {
+                    font-size: 0.8rem;
+                    width: 200px;
+                    display: inline-block;
+                    border: 1px solid black;
+                    padding: 10px;
+                    background: white;
+                    border-radius: 10px;
+                    opacity: 0;
+                    transition: 0.6s all;
+                    position: absolute;
+                    bottom: 20px;
+                    left: 10px;
+                    z-index: 3;
+                }
+                img {
+                    width: 1.2rem;
+                }
+                .icon:hover + .info, .icon:focus + .info {
+                    opacity: 1;
+                }
+            `
+ 
+            // 创建根元素，作用其实是将分离的css和html聚合起来
+            var shadow = this.attachShadow({ mode: 'open' });
+            // 创建一个span标签包裹内容
+            var wrapper = document.createElement('span');
+            wrapper.setAttribute('class', 'wrapper');
+ 
+            // 将创建的style节点追加到影子节点中
+            shadow.appendChild(style);
+            // 依次将html按照层级关系添加
+            shadow.appendChild(wrapper);
+            wrapper.appendChild(icon);
+            wrapper.appendChild(info);
+        }
+    }
+ 
+    // 定义组件
+    customElements.define('popup-info', PopUpInfo);
+ 
+</script>
+
 </html>
