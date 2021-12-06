@@ -1,20 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lazyload</title>
 </head>
 <style>
-    img { width: 100vw; height: 250px; margin-bottom: 200px; display: block; }
+    img {
+        width: 100vw;
+        height: 250px;
+        margin-bottom: 200px;
+        display: block;
+    }
 </style>
+
 <body>
     <div class="container">
         <img src="loading.gif" data-src="https://cdn.pixabay.com/photo/2015/09/09/16/05/forest-931706_1280.jpg" alt="">
         <img src="loading.gif" data-src="https://cdn.pixabay.com/photo/2014/08/01/00/08/pier-407252_1280.jpg" alt="">
         <img src="loading.gif" data-src="https://cdn.pixabay.com/photo/2014/12/15/17/16/pier-569314_1280.jpg" alt="">
         <img src="loading.gif" data-src="https://cdn.pixabay.com/photo/2010/12/13/10/09/abstract-2384_1280.jpg" alt="">
-        <img src="loading.gif" data-src="https://cdn.pixabay.com/photo/2015/10/24/11/09/drop-of-water-1004250_1280.jpg" alt="">
+        <img src="loading.gif" data-src="https://cdn.pixabay.com/photo/2015/10/24/11/09/drop-of-water-1004250_1280.jpg"
+            alt="">
     </div>
 </body>
 <script>
@@ -25,8 +33,8 @@
     // 节流函数
     function throttle(event, time) {
         let timer = null
-        return function(...args) {
-            if(!timer) {
+        return function (...args) {
+            if (!timer) {
                 timer = setTimeout(() => {
                     timer = null
                     event.apply(this, args)
@@ -34,19 +42,19 @@
             }
         }
     }
-    
+
     window.addEventListener('scroll', throttle(lazyload, 200))
-    
+
     // clientHeght > offsetTop  可视区域大于偏移量
 
     function lazyload() {
         var seeHeight = window.innerHeight // 可见区域
-        var scrollTop = document.documentElement.scrollTop 
+        var scrollTop = document.documentElement.scrollTop
             || document.body.scrollTop // 滚动条的距离
-        for(var i = n; i < img.length; i++) {
+        for (var i = n; i < img.length; i++) {
             console.log(img[i].offsetTop, seeHeight, scrollTop)
-            if(img[i].offsetTop < seeHeight + scrollTop) {
-                if(img[i].getAttribute("src") == "loading.gif") {
+            if (img[i].offsetTop < seeHeight + scrollTop) {
+                if (img[i].getAttribute("src") == "loading.gif") {
                     img[i].src = img[i].getAttribute("data-src")
                 }
                 n = i + 1
@@ -54,5 +62,5 @@
         }
     }
 </script>
-</html>
 
+</html>
