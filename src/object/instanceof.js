@@ -1,6 +1,7 @@
 /**
- * a instanceof Object
- * 判断Object的prototype是否在a的原型链上
+ * 实现 instanceof
+ * 例子：a instanceof Object
+ * 判断 Object 的 prototype 是否在 a 的原型链上
  */
 
 function myInstanceof(target, origin) {
